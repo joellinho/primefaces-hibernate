@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui ="http://java.sun.com/jsf/facelets"
+      xmlns:f ="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <head></head>
+    <h:body>
+        <ui:composition template="./WEB-INF/templates/plantilla.xhtml">
+            <ui:define name="body">
+                <h:form>
+                    <div class="wrap"  >
+                        <div class="main">
+                            <div class="carruselq" style="float: left;width: 10%">
+                                <p:menu style="height: 300px;overflow-y: scroll"  >
+                                    <p:submenu label="Prendas de vestir">
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                    </p:submenu>
+                                    <p:submenu label="Prendas de vestir">
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                    </p:submenu>
+                                    <p:submenu label="Prendas de vestir">
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                    </p:submenu>
+
+
+                                </p:menu>
+                                 <br/>
+                                <p:menu style="height: 300px;overflow-y: scroll"  >
+                                    <p:submenu label="Prendas de vestir">
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                    </p:submenu>
+                                    <p:submenu label="Prendas de vestir">
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                    </p:submenu>
+                                    <p:submenu label="Prendas de vestir">
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                        <p:menuitem value="camiseta manga larga"/>
+                                    </p:submenu>
+
+
+                                </p:menu>
+                            </div>
+                            <div class="carrusel" style="float: right;width: 80%">
+                                <p:dataGrid var="producto" value="#{shoppingBean.productosIndex}" columns="3"
+                                            paginator="true" 
+                                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                            style="float: right;width: 70%">
+                                    <p:panel  footer="#{producto.precio}" style="text-align: center ">
+                                        <p:panelGrid columns="1" style="width: 100%;text-align: center" >
+                                            <p:graphicImage value="images/#{producto.imagen}"/>
+                                            <h:outputText value="#{producto.nombreProducto}" style="text-align: center"/>
+
+                                        </p:panelGrid>
+
+                                    </p:panel>
+
+
+                                </p:dataGrid>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+            <ui:define name="footer">
+
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

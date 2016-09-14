@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui ="http://java.sun.com/jsf/facelets"
+      xmlns:f ="http://java.sun.com/jsf/core"
+      xmlns:p ="http://primefaces.org/ui">
+    <head></head>
+    <body>
+        <ui:composition template="./WEB-INF/templates/plantillacms.xhtml">
+            <ui:define name="body">
+
+                <div id="page-wrapper">
+                    <div class="graphs">
+                        <h:form id="frm">
+                            <p:commandButton value="Nuevo" actionListener="#{productoBean.setAccion('nuevo')}"  oncomplete="PF('wdgdatos').show()" update=":dlgdatos" />
+                            <h:inputText value="#{productoBean.producto.nombreProducto}"  /><p:commandButton value="Buscar"  actionListener="#{productoBean.buscarPorNombre()}" update="data"/>
+                            <p:commandButton value="Mostrar" actionListener="#{productoBean.mostraTodos()}" update="data"/>
+                            <p:dataTable id="data" value="#{productoBean.lista}" var="producto" style="width: 1000px " >
+                                <p:column headerText="codigo" ><h:outputText value="#{producto.codigo}"/></p:column>
+                                <p:column headerText="nombre" ><h:outputText value="#{producto.nombreProducto}"/></p:column>
+                                <p:column headerText="precio" ><h:outputText value="#{producto.precio}"/></p:column>
+                                <p:column headerText="imagen" ><h:outputText value="#{producto.imagen}"/></p:column>
+                                <p:column headerText="edtiar" >
+                                    <p:commandButton value="editar" oncomplete="PF('wdgdatos').show()" actionListener="#{productoBean.seleccionar(producto)}" update=":dlgdatos" />
+                                </p:column>
+                                <p:column headerText="Eliminar">
+                                    <p:commandButton value="eliminar" actionListener="#{productoBean.eliminar(producto)}" update="data"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+
+
+
+                        <p:dialog header="#{productoBean.accion}" id="dlgdatos" widgetVar="wdgdatos"  modal="true" showEffect="size" hideEffect="explode">
+                            <h:form id="frmdlg">  
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel value="codigo"/>
+                                    <p:inputText value="#{productoBean.producto.codigo}" disabled="true"  />
+                                    <h:outputLabel value="nombre"/>
+                                    <h:inputText value="#{productoBean.producto.nombreProducto}" />
+                                    <h:outputLabel value="categoria"/>
+                                    <h:inputText value="#{productoBean.producto.codigoCategoria}" />
+                                    <h:outputLabel value="subcategoria"/>
+                                    <h:inputText value="#{productoBean.producto.codigoSubcategoria}" />
+                                    <h:outputLabel value="precio"/>
+                                    <h:inputText value="#{productoBean.producto.precio}" />
+                                    <h:outputLabel value="imagen"/>
+                                    <h:inputText value="#{productoBean.producto.imagen}" />
+                                    <h:outputLabel value="descripcion"/><h:inputTextarea value="#{productoBean.producto.descripcion}"/>
+                                </h:panelGrid>
+                                <p:commandButton value="#{productoBean.accion}" actionListener="#{productoBean.operar()}" oncomplete="PF('wdgdatos').hide()" update=":frm:data"/>
+                            </h:form>
+
+                        </p:dialog>
+
+                        <h:form>
+                            <p:commandLink value="Ir A La Tienda" action="index.xhtml?faces-redirect=true"/>
+
+                        </h:form>
+
+                    </div></div>
+
+            </ui:define>
+
+        </ui:composition>
+
+
+    </body>
+</html>

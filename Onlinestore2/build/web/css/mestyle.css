@@ -1,0 +1,8 @@
+.ui-datagrid-content td,tr{
+    border-width: 0px !important;
+    
+}
+.ui-datagrid-data td,tr{
+     border-width: 0px !important;
+    
+}

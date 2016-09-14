@@ -1,0 +1,38 @@
+/*quitar pordes en la filas de un datagrid*/
+.ui-datagrid-data td,tr{
+     border-width: 0px !important;
+    
+}
+/*contenidos de cajas etc,item menus*/
+.ui-widget-content,.ui-widget-header,.ui-menuitem-link{
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    margin: 0px;
+}
+.ui-panel{
+  
+    border-width: 0px !important; 
+}
+/*eliminar el paginator top*/
+.ui-paginator-top{
+    
+    visibility: hidden !important;
+  
+}
+/*poner a todos estilo de letra*/
+.ui-widget{
+     font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    
+}
+/*qutar bordes a todos los widgets*/
+.ui-widget-header {
+     border-width: 0px !important;  
+    
+}
+.ui-state-default,.ui-button-text{
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    margin: 0px;
+}
+

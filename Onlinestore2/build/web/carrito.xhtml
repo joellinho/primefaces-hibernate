@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui ="http://java.sun.com/jsf/facelets"
+      xmlns:f ="http://java.sun.com/jsf/core"
+      xmlns:p ="http://primefaces.org/ui">
+
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <ui:composition template="./WEB-INF/templates/plantilla.xhtml">
+            <ui:define name="body">
+
+                <div class="main_bg">
+                    <div class="wrap">	
+                        <div class="main">
+                            <!-- start content -->
+                            <div class="single">
+                                <!-- start span1_of_1 -->
+                                <div class="left_content">
+
+                                    <h:form>
+                                        <p:dataTable id ="datos" value="#{shoppingBean.carrito}" var="item">
+                                            <p:column headerText="nombre" ><h:outputText value="#{item.nombre}"/></p:column>
+                                            <p:column headerText="precio"><h:outputText value="#{item.precio}"/></p:column>
+                                            <p:column headerText="cantidad"><h:outputText value="#{item.cantidad}"/></p:column>
+                                            <p:column headerText="total parcial"><h:outputText value="#{item.total}"/></p:column>
+                                            <p:column headerText="eliminar"><p:commandButton value="eliminar" action="#{shoppingBean.remove(item.codigo)}" update="datos"/></p:column>
+                                            
+                                        </p:dataTable>
+                                        <br></br>
+                                        <p:outputLabel value="Total Compra  -------------------------------------------------->      :"/><h:outputText style="font-size: 20px" value="#{shoppingBean.calcularTotal()}"/>
+                                        <br></br>
+                                        <br></br>
+                                        <p:commandButton action="#{shoppingBean.VaciarCar}" value="vacear carrito" update="datos"/>
+                                        <p:commandButton action="index.xhtml?faces-redirect=true" value="Seguir comprando"/>
+                                        <p:commandButton action="prueba.xhtml" value="hacer compra"/>
+
+                                    </h:form>
+
+
+                                </div>
+                                <!-- start sidebar -->
+                                <div class="left_sidebar">
+                                    <div class="sellers">
+                                        <h4>Best Sellers</h4>
+                                        <div class="single-nav">
+                                            <ul>
+                                                <li><a href="#">Always free from repetition</a></li>
+                                                <li><a href="#">Always free from repetition</a></li>
+
+
+                                            </ul>
+                                        </div>
+                                        <div class="banner-wrap bottom_banner color_link">
+                                            <a href="#" class="main_link">
+                                                <figure><img src="images/delivery.png"/>  </figure>
+                                                <h5>
+                                                    <span>Free Shipping
+                                                    </span>son orders over $99.
+                                                </h5>
+                                                <p>This offer is valid on all our store items.</p>
+                                            </a>
+                                        </div>
+                                        <div class="brands">
+                                            <h1>Brands</h1>
+                                            <div class="field">
+                                                <select class="select1">
+                                                    <option>Please Select</option>
+                                                    <option>Lorem ipsum dolor sit amet</option>
+                                                    <option>Lorem ipsum dolor sit amet</option>
+                                                    <option>Lorem ipsum dolor sit amet</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end sidebar -->
+                                <div class="clear"></div>
+                            </div>	
+                            <!-- end content -->
+                        </div>
+                    </div>
+                </div>		
+                <!-- start footer -->
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

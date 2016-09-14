@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui ="http://java.sun.com/jsf/facelets"
+      xmlns:f ="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+ 
+    <h:body>
+        <ui:composition template="./WEB-INF/templates/plantilla.xhtml">
+            <ui:define name="body">
+       
+        
+        <div id="da-slider" class="da-slider">
+          
+            
+            <ui:repeat value="#{shoppingBean.banner}" var="producto">
+             
+                <div class="da-slide">
+              
+                    <h2>#{msgs.bienvenido}</h2>
+                <p><h:outputText value="#{producto.descripcion}"/></p>
+                
+                <!--<a href="details.html" class="da-link">shop now</a>-->
+                  <h:form>
+                <h:commandLink action="#{productoBean.mostrarDetalles(producto.codigo)}" class="da-link" value="Detalles"/>
+                </h:form>
+               
+                <div class="da-img"><img src="images/#{producto.imagenGrande}" alt="image01" /></div>
+            </div>
+          
+            </ui:repeat>
+            
+            
+            <nav class="da-arrows">
+                <span class="da-arrows-prev"></span>
+                <span class="da-arrows-next"></span>
+            </nav>
+               
+        </div>
+
+        <!--start-cursual-->
+        <div class="wrap">
+            <!--start-img-cursual-->
+            <div id="owl-demo" class="owl-carousel">
+                
+                <ui:repeat value="#{shoppingBean.ofertas}" var="productos">
+                    
+                <div class="item" >
+                    <div class="cau_left">
+                        <img class="lazyOwl" data-src="images/#{productos.imagenChica}" alt="Lazy Owl Image"/>
+                    </div>
+                    <div class="cau_left">
+                        <h4><h:outputText value="#{productos.nombreProducto}"/></h4>
+                        <h:form>
+                            <h:commandLink action="#{productoBean.mostrarDetalles(productos.codigo)}" class="da-link" value="#{msgs.detalles}"/>
+                        </h:form>
+                        
+                        
+                        
+                    </div>
+                </div>	
+                </ui:repeat>
+                
+             
+            </div>
+            <!--//End-img-cursual-->
+        </div>
+        <!--start main1-->
+        <div class="main_bg1">
+            <div class="wrap">	
+                <div class="main1">
+                    <h2>featured products</h2>
+                </div>
+            </div>
+        </div>
+        <!-- start main -->
+        <div class="main_bg">
+            <div class="wrap">	
+                <div class="main">
+                    <!-- start grids_of_3 -->
+                    <div class="grids_of_3">
+                        <ui:repeat value="#{shoppingBean.productosIndex}" var="producto">
+                            
+                                <div class="grid1_of_3">
+                                    <a href="details.html">
+                                        <img src="images/#{producto.imagen}" alt=""/>
+                                        <h3><h:outputText value="#{producto.nombreProducto}"/></h3>
+                                        <div class="price">
+                                            
+                                            <h4>$#{producto.precio}<span>indulge</span></h4>
+                                        </div>
+                                        <span class="b_btm"></span>
+                                    </a> 
+
+                                </div>
+                              
+                                    
+
+                        </ui:repeat>
+                      <div class="clear"></div>
+                    </div>
+                    <p:dataGrid var="producto" value="#{shoppingBean.productosIndex}" columns="3" >
+                        <p:panel header="producto" footer="#{producto.precio}" style="text-align: center ">
+                            <p:panelGrid columns="1" style="width: 100%;text-align: center" >
+                                <p:graphicImage value="images/#{producto.imagen}"/>
+                                <h:outputText value="#{producto.nombreProducto}" style="text-align: center"/>
+                               
+                                </p:panelGrid>
+                                 
+                            </p:panel>
+                        
+                        
+                        </p:dataGrid>
+                    <div class="grids_of_3">
+                        <ui:repeat value="#{shoppingBean.productosIndex}" var="producto">
+                         
+                                <div class="grid1_of_3">
+                                    <a href="details.html">
+                                        <img src="images/#{producto.imagen}" alt=""/>
+                                        <h3><h:outputText value="#{producto.nombreProducto}"/></h3>
+                                        <div class="price">
+                                            <h4>$300<span>indulge</span></h4>
+                                        </div>
+                                        <span class="b_btm"></span>
+                                    </a> 
+                                    
+                                </div>
+
+                               
+
+                        </ui:repeat>
+                        <div class="clear"></div>
+                        
+                      
+                        
+                    </div>
+
+                   
+                </div>
+            </div>
+        </div>	
+      
+       
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <h:body>
+       
+         <div class="header_btm">
+            <div class="wrap">
+                <div class="header_sub">
+                    <div class="h_menu">
+                        <ul>
+                            <li class="active"><a href="faces/index.xhtml">#{msgs.inicio}</a></li> |
+                            <li><a href="sale.html">#{msgs.comprar}</a></li> |
+                            <li><a href="handbags.html">#{msgs.sandalias}</a></li> |
+                            <li><a href="accessories.html">#{msgs.accesorios}</a></li> |
+                            <li><a href="wallets.html">#{msgs.carteras}</a></li> |
+                            <li><a href="sale.html">#{msgs.venta}</a></li> |
+                            <li><a href="index.xhtml">#{msgs.nuevaTienda}</a></li> |
+                            <li><a href="shoes.html">#{msgs.zapatos}</a></li> |
+                            <li><a href="sale.html">#{msgs.vendimia}</a></li> |
+                            <li><a href="/faces/prueba.xhtml">#{msgs.servicios}</a></li> |
+                            <li><a href="login.xhtml">#{msgs.administrar}</a></li>
+                        </ul>
+                    </div>
+                    <div class="top-nav">
+                        <nav class="nav">	        	
+                            <a href="#" id="w3-menu-trigger"> </a>
+                            <ul class="nav-list" style="">
+                                <li class="nav-item"><a class="active" href="index.xhtml.html">Home</a></li>
+                                <li class="nav-item"><a href="sale.html">Sale</a></li>
+                                <li class="nav-item"><a href="handbags.html">Handbags</a></li>
+                                <li class="nav-item"><a href="accessories.html">Accessories</a></li>
+                                <li class="nav-item"><a href="shoes.html">Shoes</a></li>
+                                <li class="nav-item"><a href="service.html">Services</a></li>
+                                <li class="nav-item"><a href="/login.xhtml">administrar</a></li>
+                            </ul>
+                        </nav>
+                        <div class="search_box">
+                            <form>
+                                <input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {
+                                            this.value = 'Search';
+                                        }"/><input type="submit" value=""/>
+                            </form>
+                        </div>
+                        <div class="clear"> </div>
+                        <script src="js/responsive.menu.js"></script>
+                    </div>		  
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
