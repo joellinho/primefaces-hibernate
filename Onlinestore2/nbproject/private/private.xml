@@ -3,14 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin-joel/Documents/NetBeansProjects/Onlinestore2/src/java/com/pe/online/beans/ShoppingBean.java</file>
-            <file>file:/C:/Users/admin-joel/Documents/NetBeansProjects/Onlinestore2/src/java/com/pe/online/beans/PedidosBean.java</file>
-            <file>file:/C:/Users/admin-joel/Documents/NetBeansProjects/Onlinestore2/src/java/com/pe/online/test/persistenceTest.java</file>
-            <file>file:/C:/Users/admin-joel/Documents/NetBeansProjects/Onlinestore2/src/java/com/pe/online/dao/ProductoDAO.java</file>
-            <file>file:/C:/Users/admin-joel/Documents/NetBeansProjects/Onlinestore2/src/java/model/Producto.java</file>
-            <file>file:/C:/Users/admin-joel/Documents/NetBeansProjects/Onlinestore2/web/index.xhtml</file>
-            <file>file:/C:/Users/admin-joel/Documents/NetBeansProjects/Onlinestore2/src/java/com/pe/online/beans/ProductoBean.java</file>
-            <file>file:/C:/Users/admin-joel/Documents/NetBeansProjects/Onlinestore2/src/java/com/pe/online/entity/ProductoTO.java</file>
+            <file>file:/C:/Users/admin-joel/Documents/NetBeansProjects/Onlinestore2/src/java/com/pe/online/dao/UsuarioDAO.java</file>
         </group>
     </open-files>
 </project-private>

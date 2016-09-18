@@ -184,9 +184,15 @@ public class Producto implements Serializable {
         return true;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Producto{" + "codigo=" + codigo + '}';
+//    }
+
     @Override
     public String toString() {
-        return "Producto{" + "codigo=" + codigo + '}';
+        return "Producto{" + "codigo=" + codigo + ", codigoCategoria=" + codigoCategoria + ", codigoSubcategoria=" + codigoSubcategoria + ", nombreProducto=" + nombreProducto + ", imagen=" + imagen + ", descripcion=" + descripcion + ", precio=" + precio + ", imagenChica=" + imagenChica + ", imagenGrande=" + imagenGrande + ", bannerChico=" + bannerChico + ", bannerGrande=" + bannerGrande + '}';
     }
+    
 
 }

@@ -105,15 +105,7 @@ public class ProductoBean implements Serializable {
 
     public void limpiar() {
         producto = new ProductoTO();
-//    producto.setCodigo(0);
-//    producto.setDescripcion("");
-//    producto.setBannerChico("");
-//    producto.setImagen("");
-//    producto.setNombreProducto("");
-//    producto.setPrecio(0.0);
-//    producto.setCodigoSubcategoria(0);
-//    producto.setCodigoCategoria(0);
-//    producto.setImagen("");
+
     }
 
     public void operar() {
