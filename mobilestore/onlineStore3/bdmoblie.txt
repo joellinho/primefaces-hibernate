@@ -1,0 +1,213 @@
+drop database mobile_db;
+CREATE DATABASE  IF NOT EXISTS `mobile_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `mobile_db`;
+
+
+CREATE TABLE `role` (
+  `role_id` int(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`role_id`)
+) ;
+
+
+
+CREATE TABLE `document_type` (
+  `document_type_id` int(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`document_type_id`)
+);
+
+
+
+CREATE TABLE `city` (
+  `city_id` int(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`city_id`)
+);
+
+
+
+CREATE TABLE `state` (
+  `state_id` int(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`state_id`)
+);
+
+
+
+CREATE TABLE `brand` (
+  `brand_id` int(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`brand_id`)
+) ;
+
+
+
+CREATE TABLE `os` (
+  `os_id` int(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`os_id`)
+) ;
+
+
+
+
+CREATE TABLE `screen_type` (
+  `screen_type_id` int(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`screen_type_id`)
+) ;
+
+
+
+
+CREATE TABLE `battery_type` (
+  `battery_type_id` int(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`battery_type_id`)
+) ;
+
+
+
+CREATE TABLE `product` (
+  `product_id` int(4) NOT NULL AUTO_INCREMENT,
+  `model` varchar(30) NOT NULL,
+  `price` double NOT NULL,
+  `image_url` varchar(120) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `brand_id` int(4) NOT NULL,
+  `os_id` int(4) NOT NULL,
+  `charge_time` int(4) DEFAULT NULL,
+  `duration` int(4) DEFAULT NULL,
+  `mah` int(4) DEFAULT NULL,
+  `stand_by` int(4) DEFAULT NULL,
+  `battery_type_id` int(4) NOT NULL,
+  `sim_count` int(4) DEFAULT NULL,
+  `bluetooth` varchar(30) DEFAULT NULL,
+  `wifi` bit(1) DEFAULT NULL,
+  `usb` bit(1) DEFAULT NULL,
+  `micro_usb` bit(1) DEFAULT NULL,
+  `gps` bit(1) DEFAULT NULL,
+  `infrared` bit(1) DEFAULT NULL,
+  `tethering` bit(1) DEFAULT NULL,
+  `nfc` bit(1) DEFAULT NULL,
+  `processor` varchar(50) NOT NULL,
+  `ram` int(4) NOT NULL,
+  `storage` int(4) NOT NULL,
+  `width` double DEFAULT NULL,
+  `height` double DEFAULT NULL,
+  `thickness` double DEFAULT NULL,
+  `micro_sd` bit(1) DEFAULT NULL,
+  `micro_sd_limit` int(4) DEFAULT NULL,
+  `weight` int(4) DEFAULT NULL,
+  `main_cam` int(4) NOT NULL,
+  `frontal_cam` int(4) DEFAULT NULL,
+  `cam_digital_zoom` int(4) DEFAULT NULL,
+  `video_resolution` int(4) DEFAULT NULL,
+  `video_digital_zoom` int(4) DEFAULT NULL,
+  `has_flash` bit(1) DEFAULT NULL,
+  `face_detection` bit(1) DEFAULT NULL,
+  `radio_am` bit(1) DEFAULT NULL,
+  `radio_fm` bit(1) DEFAULT NULL,
+  `analog_tv` bit(1) DEFAULT NULL,
+  `digital_tv` bit(1) DEFAULT NULL,
+  `resolution` varchar(30) DEFAULT NULL,
+  `size` double DEFAULT NULL,
+  `screen_type_id` int(4) NOT NULL,
+  `edge` bit(1) DEFAULT NULL,
+  `gprs` bit(1) DEFAULT NULL,
+  `gsm` bit(1) DEFAULT NULL,
+  `hsdpa` bit(1) DEFAULT NULL,
+  `hspa_plus` bit(1) DEFAULT NULL,
+  `lte` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`product_id`),
+  KEY `fk_product_brand1_idx` (`brand_id`),
+  KEY `fk_product_os1_idx` (`os_id`),
+  KEY `fk_product_battery_type1_idx` (`battery_type_id`),
+  KEY `fk_product_screen_type1_idx` (`screen_type_id`),
+  CONSTRAINT `fk_product_battery_type1` FOREIGN KEY (`battery_type_id`) REFERENCES `battery_type` (`battery_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_product_brand1` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`brand_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_product_os1` FOREIGN KEY (`os_id`) REFERENCES `os` (`os_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_product_screen_type1` FOREIGN KEY (`screen_type_id`) REFERENCES `screen_type` (`screen_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+
+
+CREATE TABLE `customer` (
+  `customer_id` int(4) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `document_number` varchar(20) NOT NULL,
+  `address` varchar(120) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `email1` varchar(120) NOT NULL,
+  `email2` varchar(120) DEFAULT NULL,
+  `facebook` varchar(120) DEFAULT NULL,
+  `linkedin` varchar(120) DEFAULT NULL,
+  `twitter` varchar(120) DEFAULT NULL,
+  `document_type_id` int(4) NOT NULL,
+  `city_id` int(4) NOT NULL,
+  `state_id` int(4) NOT NULL,
+  PRIMARY KEY (`customer_id`),
+  KEY `fk_customer_document_type1_idx` (`document_type_id`),
+  KEY `fk_customer_city1_idx` (`city_id`),
+  KEY `fk_customer_state1_idx` (`state_id`),
+  CONSTRAINT `fk_customer_city1` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_customer_document_type1` FOREIGN KEY (`document_type_id`) REFERENCES `document_type` (`document_type_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_customer_state1` FOREIGN KEY (`state_id`) REFERENCES `state` (`state_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ;
+
+
+
+CREATE TABLE `user` (
+  `user_id` int(4) NOT NULL AUTO_INCREMENT,
+  `user_login` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `first_name` varchar(30) DEFAULT NULL,
+  `last_name` varchar(30) DEFAULT NULL,
+  `customer_id` int(4) DEFAULT NULL,
+  `role_id` int(4) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `fk_user_customer1_idx` (`customer_id`),
+  KEY `fk_user_role1_idx` (`role_id`),
+  CONSTRAINT `fk_user_customer1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ;
+
+
+CREATE TABLE `po` (
+  `po_id` int(4) NOT NULL AUTO_INCREMENT,
+  `sub_total` double NOT NULL,
+  `tax` double NOT NULL,
+  `total` double NOT NULL,
+  `status` int(4) NOT NULL,
+  `delivery_date` datetime DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `processed_on` datetime DEFAULT NULL,
+  `delivered_on` datetime DEFAULT NULL,
+  `cancelled_on` datetime DEFAULT NULL,
+  `updated_on` datetime DEFAULT NULL,
+  `customer_id` int(4) NOT NULL,
+  PRIMARY KEY (`po_id`),
+  KEY `fk_po_customer1_idx` (`customer_id`),
+  CONSTRAINT `fk_po_customer1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ;
+
+
+
+CREATE TABLE `po_item` (
+  `po_item_id` int(4) NOT NULL AUTO_INCREMENT,
+  `quantity` int(4) NOT NULL,
+  `unit_price` double NOT NULL,
+  `sub_total` double NOT NULL,
+  `po_id` int(4) NOT NULL,
+  `product_id` int(4) NOT NULL,
+  PRIMARY KEY (`po_item_id`),
+  KEY `fk_po_item_po1_idx` (`po_id`),
+  KEY `fk_po_item_product1_idx` (`product_id`),
+  CONSTRAINT `fk_po_item_po1` FOREIGN KEY (`po_id`) REFERENCES `po` (`po_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_po_item_product1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ;
+
+

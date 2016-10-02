@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <ui:composition template="/templates/secured/layout.xhtml">
+            <ui:define name="content">
+                <div class="col-md-3">
+                    <h3>#{msg.customer_filters}</h3>
+                </div>
+                <div class="col-md-9">
+                    <h2>#{msg.customer_title}</h2>
+                    <div class="row">
+                        <h:form id="resultForm">
+                            <p:toolbar style="margin-bottom: 10px">
+                                <f:facet name="left">
+                                    <p:commandButton value="#{msg.customer_table_new}" icon="ui-icon-document"
+                                                     action="#{customerListView.newCustomer()}"/>
+                                </f:facet>
+                            </p:toolbar>
+                            
+                            <p:dataTable var="customer" value="#{customerListView.customerList}">
+                                <p:column headerText="#{msg.customer_table_id}" width="40">
+                                    <h:outputText value="#{customer.customerID}" />
+                                </p:column>
+
+                                <p:column headerText="#{msg.customer_table_fullName}" width="100">
+                                    <h:outputText value="#{customer.firstName} #{customer.lastName}" />
+                                </p:column>
+
+                                <p:column headerText="#{msg.customer_table_mobile}" width="60">
+                                    <h:outputText value="#{customer.customerVirtual.mobile}" />
+                                </p:column>
+
+                                <p:column headerText="#{msg.customer_table_emails}" width="150">
+                                    <h:outputText value="#{customer.customerVirtual.email1}" /><br />
+                                    <h:outputText value="#{customer.customerVirtual.email2}" />
+                                </p:column>
+
+                                <p:column headerText="#{msg.customer_table_actions}" width="100">
+                                    <div>
+                                        <h:commandLink value="#{msg.customer_table_action_edit}" 
+                                                       action="#{customerListView.editCustomer(customer.customerID)}"
+                                                       class="btn btn-link" >
+                                        </h:commandLink>
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">    
+    <h:body>
+        <ui:composition template="/templates/secured/layout.xhtml">
+            <ui:define name="content">
+                <h:form id="resultForm" prependId="false">
+                    <p:messages id="messages" showDetail="false" showSummary="true" autoUpdate="true" closable="true" />
+
+                    <div class="col-md-3">
+                        <p:graphicImage value="/resources/static/product/#{productView.product.imageUrl}" width="200" />
+                    </div>
+                    <div class="col-md-9">
+                        <h2>#{productController.brands.get(productView.product.brandID)} - #{productView.product.model}</h2>
+                        <p:accordionPanel multiple="true" activeIndex="0,1,2,3,4,5,6">
+                            <p:tab title="#{msg.product_general}">
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_general_brand}</p:outputLabel>
+                                    <h:outputText value="#{productController.brands.get(productView.product.brandID)}"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_general_model}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.model}"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_general_os}</p:outputLabel>
+                                    <h:outputText value="#{productController.operatingSystems.get(productView.product.osID)}"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                            </p:tab>
+                            <p:tab title="#{msg.product_hardware}">
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_hardware_processor}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.hardware.processor}"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_hardware_ram}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.hardware.ramGB}"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_hardware_storage}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.hardware.storageGB}"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_hardware_weight}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.hardware.weightGR}gr."
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_hardware_dimmensions}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.hardware.widthMM}mm x #{productView.product.hardware.heightMM}mm x #{productView.product.hardware.thicknessMM}mm"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                            </p:tab>
+                            <p:tab title="#{msg.product_screen}">
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_screen_resolution}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.screen.resolution}"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_screen_size}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.screen.size}''"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_screen_type}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.screen.type}"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                            </p:tab>
+                            <p:tab title="#{msg.product_connectivity}">
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_connectivity_simCount}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.connectivity.simCount}"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_connectivity_bluetooth}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.connectivity.bluetooth}"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_connectivity_others}</p:outputLabel>
+                                    <div class="col-md-5">
+                                        <p:selectManyCheckbox value="#{productView.selectedConnectivity}" layout="pageDirection">
+                                            <f:selectItem itemLabel="#{msg.product_connectivity_microusb}" itemValue="microusb" />
+                                            <f:selectItem itemLabel="#{msg.product_connectivity_usb}" itemValue="usb" />
+                                            <f:selectItem itemLabel="#{msg.product_connectivity_wifi}" itemValue="wifi" />
+                                            <f:selectItem itemLabel="#{msg.product_connectivity_gps}" itemValue="gps" />
+                                            <f:selectItem itemLabel="#{msg.product_connectivity_nfc}" itemValue="nfc" />
+                                            <f:selectItem itemLabel="#{msg.product_connectivity_tethering}" itemValue="tethering" />
+                                            <f:selectItem itemLabel="#{msg.product_connectivity_infrared}" itemValue="infrared" />
+                                        </p:selectManyCheckbox>
+                                    </div>
+                                </div>
+                            </p:tab>
+                            <p:tab title="#{msg.product_battery}">
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_battery_duration}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.battery.durationHours}h"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_battery_standBy}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.battery.standByHours}h"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_battery_chargeTime}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.battery.chargeTimeHours}h"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_battery_type}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.battery.type} (#{productView.product.battery.mah} mAh)"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                            </p:tab>
+                            <p:tab title="#{msg.product_multimedia}">
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_multimedia_mainCam}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.multimedia.mainCam}MP (zoom #{productView.product.multimedia.camDigitalZoom})"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_multimedia_frontalCam}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.multimedia.frontalCam}MP"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_multimedia_video}</p:outputLabel>
+                                    <h:outputText value="#{productView.product.multimedia.videoResolution}p (zoom #{productView.product.multimedia.videoDigitalZoom})"
+                                                  class="col-md-5 form-control-static" />
+                                </div>
+                                <div class="form-group">
+                                    <p:outputLabel class="col-md-4 control-label">#{msg.product_multimedia_others}</p:outputLabel>
+                                    <div class="col-md-5">
+                                        <p:selectManyCheckbox value="#{productView.selectedMultimedia}" layout="pageDirection">
+                                            <f:selectItem itemLabel="#{msg.product_multimedia_hasFlash}" itemValue="hasFlash" />
+                                            <f:selectItem itemLabel="#{msg.product_multimedia_faceDetection}" itemValue="faceDetection" />
+                                            <f:selectItem itemLabel="#{msg.product_multimedia_analogTV}" itemValue="analogTV" />
+                                            <f:selectItem itemLabel="#{msg.product_multimedia_digitalTV}" itemValue="digitalTV" />
+                                            <f:selectItem itemLabel="#{msg.product_multimedia_radioAM}" itemValue="radioAM" />
+                                            <f:selectItem itemLabel="#{msg.product_multimedia_radioFM}" itemValue="radioFM" />
+                                        </p:selectManyCheckbox>
+                                    </div>
+                                </div>
+                            </p:tab>
+                            <p:tab title="#{msg.product_technology}">
+                                <div class="form-group">
+                                    <div class="col-md-9">
+                                        <p:selectManyCheckbox value="#{productView.selectedTechnology}" layout="pageDirection">
+                                            <f:selectItem itemLabel="#{msg.product_technology_lte}" itemValue="lte" />
+                                            <f:selectItem itemLabel="#{msg.product_technology_edge}" itemValue="edge" />
+                                            <f:selectItem itemLabel="#{msg.product_technology_gsm}" itemValue="gsm" />
+                                            <f:selectItem itemLabel="#{msg.product_technology_gprs}" itemValue="gprs" />
+                                            <f:selectItem itemLabel="#{msg.product_technology_hsdpa}" itemValue="hsdpa" />
+                                            <f:selectItem itemLabel="#{msg.product_technology_hspaPlus}" itemValue="hspaPlus" />
+                                        </p:selectManyCheckbox>
+                                    </div>
+                                </div>
+                            </p:tab>
+                        </p:accordionPanel>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

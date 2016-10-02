@@ -16,6 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import model.Cliente;
 import model.Usuario;
 
 public class UsuarioDAO {
@@ -56,23 +57,27 @@ public class UsuarioDAO {
     
     public List<UsuarioTO> getAll() {
         List<UsuarioTO> listausuario = new ArrayList<>();
-        JPAUtil.init("OnlineStorePU");
+//        JPAUtil.init("OnlineStorePU");
         String cnsulta = "SELECT new com.pe.online.entity.UsuarioTO(u.id,u.usuario,u.password) FROM Usuario u ";
         TypedQuery<UsuarioTO> typedQuery = JPAUtil.getEntityManager().createQuery(cnsulta, UsuarioTO.class);
         listausuario = typedQuery.getResultList();
-        JPAUtil.closeEntityManager();
+      
         return listausuario;
     }
     
     public boolean login(UsuarioTO usuario) {
-        boolean bandera = false;
-        for (int i = 1; i <= fuente.size(); i++) {
-            if (fuente.get(i).getPassword().equals(usuario.getPassword())) {
-                bandera = true;
-            }
+             String query = "select u from Usuario u where u.usuario=:usuario and u.password=:password";
+        Query resultado = JPAUtil.getEntityManager().createQuery(query);
+        resultado.setParameter("usuario", usuario.getUsuario());
+        resultado.setParameter("password", usuario.getPassword());
+        try {
+         Usuario user = (Usuario) resultado.getSingleResult();
+            return true;
+        } catch (javax.persistence.NoResultException ex) {
+            return false;
         }
         
-        return bandera;
+      
         
     }
     
@@ -80,50 +85,50 @@ public class UsuarioDAO {
         Usuario usuario = new Usuario();
         usuario.setUsuario(usuarioTO.getUsuario());
         usuario.setPassword(usuarioTO.getPassword());
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
-        EntityManager em = emf.createEntityManager();
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
+        EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
         em.persist(usuario);
         em.getTransaction().commit();
-        em.close();
-        emf.close();
+      
+        
         
     }
     
     public void eliminar(UsuarioTO usuarioTO) {
         Usuario usuario = new Usuario();
         String query = "select u from Usuario u where id =:codigo";
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
-        EntityManager em = emf.createEntityManager();
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
+        EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
         TypedQuery<Usuario> typedQuery = em.createQuery(query, Usuario.class);
         typedQuery.setParameter("codigo", usuarioTO.getCodigo());
         usuario = typedQuery.getSingleResult();
         em.remove(usuario);
         em.getTransaction().commit();
-        em.close();
-        emf.close();
+        
+//        emf.close();
         
     }
     
     public UsuarioTO seleccionar(UsuarioTO usuarioTO) {
         UsuarioTO usuarioTo = new UsuarioTO();
         String query = "select new com.pe.online.entity.UsuarioTO(u.id,u.usuario,u.password)  from Usuario u where id=:codigo";
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
-        EntityManager em = emf.createEntityManager();
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
+        EntityManager em = JPAUtil.getEntityManager();
         
         TypedQuery<UsuarioTO> typedQuery = em.createQuery(query, UsuarioTO.class);
         typedQuery.setParameter("codigo", usuarioTO.getCodigo());
         usuarioTo = typedQuery.getSingleResult();
-        em.close();
+       
         return usuarioTo;
     }
     
     public void modificar(UsuarioTO usuarioTo) {
         Usuario usuario = new Usuario();
         String query = "select u from Usuario u where id =:codigo";
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
-        EntityManager em = emf.createEntityManager();
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
+        EntityManager em = JPAUtil.getEntityManager();
         TypedQuery<Usuario> typedQuery = em.createQuery(query, Usuario.class);
         typedQuery.setParameter("codigo", usuarioTo.getCodigo());
         
@@ -135,7 +140,7 @@ public class UsuarioDAO {
         em.merge(usuario);
         
         em.getTransaction().commit();
-        em.close();
+      
     }
     
 }

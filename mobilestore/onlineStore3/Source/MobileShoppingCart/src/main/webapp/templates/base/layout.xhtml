@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <f:view locale="#{facesContext.externalContext.requestLocale}">
+        <f:event type="preRenderView" listener="#{securityController.login()}" />
+        <h:head>
+            <title>#{msg.main_title}</title>
+            <!--            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />-->
+            <h:outputStylesheet name="/static/bootstrap/css/bootstrap.min.css" />
+            <h:outputStylesheet name="/static/bootstrap/css/bootstrap-theme.min.css" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        </h:head>
+        <h:body>
+            <div class="container">
+                <div class="page-header">
+                    <ui:insert name="header">
+                        <ui:include src="/templates/base/header.xhtml" />
+                    </ui:insert>                
+                </div>
+                <div class="row">
+                    <ui:insert name="content">
+                        <ui:include src="/templates/base/content.xhtml" />
+                    </ui:insert>
+                </div>
+                <div class="footer">
+                    <ui:insert name="footer">
+                        <ui:include src="/templates/base/footer.xhtml" />
+                    </ui:insert>
+                </div>            
+            </div>
+            <!--            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>-->
+            <h:outputScript name="/static/bootstrap/js/bootstrap.min.js" />
+        </h:body>
+    </f:view>
+</html>

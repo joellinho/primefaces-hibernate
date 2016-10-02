@@ -50,6 +50,8 @@ public class ShoppingBean {
     }
 
     public String addToCart(int codigo, int cantidad) {
+        
+        
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         List<CarItemBean> carrito = (List<CarItemBean>) session.getAttribute("carrito");
         if (carrito == null) {
@@ -65,15 +67,11 @@ public class ShoppingBean {
         int indexe = existe(codigo);
         if (indexe != -1) {
             int cantidaditem = carrito.get(indexe).getCantidad();
-
-//        carrito.remove(index);
             item.setCantidad(cantidad + cantidaditem);
             removetoCart(indexe);
         } else {
-
             item.setCantidad(cantidad);
         }
-
         item.calcularTotal();
         carrito.add(item);
         session.setAttribute("carrito", carrito);
@@ -94,7 +92,7 @@ public class ShoppingBean {
         List<CarItemBean> carrito = new ArrayList<>();
 
         session.setAttribute("carrito", carrito);
-        return "carrito";
+        return "carrito.xhtml?facces-redirect=true";
     }
 
     public double calcularTotal() {

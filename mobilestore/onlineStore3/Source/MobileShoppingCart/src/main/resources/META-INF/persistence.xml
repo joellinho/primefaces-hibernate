@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="PU_MobileShoppingCart" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.PoItemDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.CityDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.CustomerDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.OsDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.ScreenDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.ScreenTypeDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.UserDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.MultimediaDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.BatteryTypeDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.RoleDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.TechnologyDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.BatteryDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.ConnectivityDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.BrandDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.HardwareDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.PoDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.ProductDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.StateDAO</class>
+    <class>pe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.SearchProductItemDAO</class>
+    <class>Cuspe.edu.cibertec.jadv.eb.MobileShoppingCart.dao.CustomerGeneralDAO</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mobile_db?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.password" value="Cibertec20160227"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+    </properties>
+  </persistence-unit>
+</persistence>

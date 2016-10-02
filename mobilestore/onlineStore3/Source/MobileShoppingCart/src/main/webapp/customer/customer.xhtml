@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">    
+    <h:body>
+        <ui:composition template="/templates/secured/layout.xhtml">
+            <ui:define name="content">
+                <h:form id="resultForm" prependId="false">
+                    <p:messages id="messages" showDetail="false" showSummary="true" autoUpdate="true" closable="true" />
+
+                    <div class="col-md-3">
+                        <p:panel id="pnlInformation" header="#{msg.customer_section}">
+                            <ul class="nav">
+                                <li><a href="#pnlGeneral">#{msg.customer_section_general}</a></li>
+                                <li><a href="#pnlSystem">#{msg.customer_section_system}</a></li>
+                                <li><a href="#pnlAddress">#{msg.customer_section_address}</a></li>
+                                <li><a href="#pnlContact">#{msg.customer_section_virtual}</a></li>
+                            </ul>                                                        
+                            <p:commandLink value="#{msg.customer_edit_save}"
+                                           action="#{customerView.saveChanges()}"
+                                           update="resultForm"
+                                           class="btn btn-primary"
+                                           style="margin-top: 20px; color: white" />                            
+
+                        </p:panel>
+                        <p:sticky target="pnlInformation" />
+                    </div>
+                    <div class="col-md-9">
+                        <h2>#{msg.customer_edit_title} #{customerView.customer.firstName} #{customerView.customer.lastName}</h2>
+                        <div class="row">
+                            <div class="col-md-10 form-horizontal">
+                                <p:panel id="pnlGeneral" header="#{msg.customer_section_general}">
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtFirstName" class="col-md-4 control-label">#{msg.customer_edit_firstName}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputText id="txtFirstName" value="#{customerView.customer.firstName}" class="form-control" 
+                                                         required="true" label="#{msg.customer_edit_firstName}">
+                                            </h:inputText>
+                                        </div>
+                                        <!--                                        <div class="col-md-1">
+                                                                                    <p:message for="txtFirstName" display="tooltip" />                                            
+                                                                                </div>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtLastName" class="col-md-4 control-label">#{msg.customer_edit_lastName}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputText id="txtLastName" value="#{customerView.customer.lastName}" class="form-control" 
+                                                         required="true" label="#{msg.customer_edit_lastName}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="selDocType" class="col-md-4 control-label">#{msg.customer_edit_docType}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <p:selectOneMenu id="selDocType" value="#{customerView.customer.docType}" 
+                                                             required="true" label="#{msg.customer_edit_docType}" style="width: 200px">
+                                                <f:selectItem itemLabel="#{msg.customer_edit_docType_select}" itemValue="" />
+                                                <f:selectItem itemLabel="#{msg.customer_edit_docType_dni}" itemValue="1" />
+                                                <f:selectItem itemLabel="#{msg.customer_edit_docType_passport}" itemValue="2" />
+                                                <f:selectItem itemLabel="#{msg.customer_edit_docType_card}" itemValue="3" />                                                
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtDocID" class="col-md-4 control-label">#{msg.customer_edit_docID}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputText id="txtDocID" value="#{customerView.customer.docID}" class="form-control" 
+                                                         required="true" label="#{msg.customer_edit_docID}" />
+                                        </div>
+                                    </div>
+                                </p:panel>
+                                <p:panel id="pnlSystem" header="#{msg.customer_section_system}">
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtUserLogin" class="col-md-4 control-label">#{msg.customer_edit_userLogin}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputText id="txtUserLogin" value="#{customerView.user.userLogin}" class="form-control" 
+                                                         required="true" label="#{msg.customer_edit_userLogin}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtPassword" class="col-md-4 control-label">#{msg.customer_edit_password}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputSecret id="txtPassword" value="#{customerView.user.password}" class="form-control"
+
+                                                        required="true" label="#{msg.customer_edit_password}"
+                                                        validatorMessage="#{msg.customer_edit_password} #{msg.invalid_password}" redisplay="true">
+                                                <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})|x{10}" />
+                                            </h:inputSecret>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtConfirmPassword" class="col-md-4 control-label">#{msg.customer_edit_confirmPassword}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputSecret id="txtConfirmPassword" value="#{customerView.confirmPassword}" class="form-control" 
+                                                        validatorMessage="#{msg.customer_edit_confirmPassword} #{msg.invalid_password}" redisplay="true">
+                                                <f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})|x{10}" />
+                                            </h:inputSecret>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                                <p:panel id="pnlAddress" header="#{msg.customer_section_address}">
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtAddress" class="col-md-4 control-label">#{msg.customer_edit_address}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputTextarea id="txtAddress" value="#{customerView.customer.customerAddress.address}" rows="4" class="form-control" 
+                                                             required="true" label="#{msg.customer_edit_address}" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="selCity" class="col-md-4 control-label">#{msg.customer_edit_city}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <p:selectOneMenu id="selCity" value="#{customerView.customer.customerAddress.city}" 
+                                                             required="true" label="#{msg.customer_edit_city}" style="width: 200px">
+                                                <f:selectItems value="#{customerView.cityItems}" var="item" itemLabel="#{item.label}" itemValue="#{item.value}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="selState" class="col-md-4 control-label">#{msg.customer_edit_state}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <p:selectOneMenu id="selState" value="#{customerView.customer.customerAddress.state}" 
+                                                             required="true" label="#{msg.customer_edit_state}" style="width: 200px">
+                                                <f:selectItems value="#{customerView.stateItems}" var="item" itemLabel="#{item.label}" itemValue="#{item.value}" />
+                                            </p:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                                <p:panel id="pnlContact" header="#{msg.customer_section_virtual}">
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtEmail1" class="col-md-4 control-label">#{msg.customer_edit_email1}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">@</span>
+                                                <h:inputText id="txtEmail1" value="#{customerView.customer.customerVirtual.email1}" class="form-control" 
+                                                             required="true" label="#{msg.customer_edit_email1}" 
+                                                             validatorMessage="#{msg.customer_edit_email1} #{msg.invalid_email}">
+                                                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtEmail2" class="col-md-4 control-label">#{msg.customer_edit_email2}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">@</span>
+                                                <h:inputText id="txtEmail2" value="#{customerView.customer.customerVirtual.email2}" class="form-control"
+                                                             validatorMessage="#{msg.customer_edit_email2} #{msg.invalid_email}">
+                                                    <f:validateRegex pattern="(|[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z])"/>
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtMobile" class="col-md-4 control-label">#{msg.customer_edit_mobile}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputText id="txtMobile" value="#{customerView.customer.customerVirtual.mobile}" class="form-control" 
+                                                         required="true" label="#{msg.customer_edit_mobile}"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtPhone" class="col-md-4 control-label">#{msg.customer_edit_phone}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputText id="txtPhone" value="#{customerView.customer.customerVirtual.phone}" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtFacebook" class="col-md-4 control-label">#{msg.customer_edit_facebook}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputText id="txtFacebook" value="#{customerView.customer.customerVirtual.facebook}" class="form-control"
+                                                         validatorMessage="#{msg.customer_edit_facebook} #{msg.invalid_facebook}">
+                                                <f:validateRegex pattern="(|(?:(?:http|https):\/\/)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?)" />
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtLinkedin" class="col-md-4 control-label">#{msg.customer_edit_linkedin}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputText id="txtLinkedin" value="#{customerView.customer.customerVirtual.linkedin}" class="form-control"
+                                                         validatorMessage="#{msg.customer_edit_linkedin} #{msg.invalid_linkedin}">
+                                                <f:validateRegex pattern="(|https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$)" />
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="txtTwitter" class="col-md-4 control-label">#{msg.customer_edit_twitter}</p:outputLabel>
+                                        <div class="col-md-8">
+                                            <h:inputText id="txtTwitter" value="#{customerView.customer.customerVirtual.twitter}" class="form-control"
+                                                         validatorMessage="#{msg.customer_edit_twitter} #{msg.invalid_twitter}">
+                                                <f:validateRegex pattern="(|https:\/\/twitter\.com\/(#!\/)?[a-zA-Z0-9_]+)" />
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

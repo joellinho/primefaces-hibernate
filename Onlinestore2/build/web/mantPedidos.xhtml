@@ -21,16 +21,35 @@ and open the template in the editor.
 
                 <div id="page-wrapper">
                     <div class="graphs">
-                        <h:form>
+                        <h:form id="frmDetalles">
+                            <p:growl autoUpdate="true" rendered="true"/>
                             <p:commandButton actionListener="#{pedidosBean.mostrartodos}" value="listar" update="data" />
-
-                            <p:dataTable id="data" value="#{pedidosBean.listaPedidos}" var="pedido">
+                            
+                            <p:dataTable id="data" value="#{pedidosBean.listaPedidos}" var="pedido"
+                                         selection="#{pedidosBean.pedidos}" selectionMode="single" rows="5"
+                                         rowKey="#{pedido.codigo}" paginator="true" paginatorPosition="bottom" rowsPerPageTemplate="5,10"  >
+                                <p:ajax event="rowSelect" listener="#{pedidosBean.rowSelect}" oncomplete="PF('wdgDetalles').show()" update=":frmDetalles:datosDetalles"/>
                                 <p:column headerText="codigo" ><h:outputText value="#{pedido.codigo}"/></p:column>  
-                                <p:column headerText="importe" ><h:outputText value="#{pedido.cantidad}"/></p:column>  
-                                <p:column headerText="fecha" ><h:outputText value="#{pedido.fecha}"/></p:column>  
+                                
+                                <p:column headerText="fecha pedido" ><h:outputText value="#{pedido.fechaPedido}"/></p:column>  
+                                <p:column headerText="fecha entrega" ><h:outputText value="#{pedido.fechaEntrega}"/></p:column>  
+                                <p:column headerText="importe" ><h:outputText value="#{pedido.total}"/></p:column> 
+                               
                                 <p:column > <p:commandButton value="eliminar" actionListener="#{pedidosBean.eliminar(pedido)}" update="data"/></p:column>
 
                             </p:dataTable>
+                            <p:dialog header="detalle" id="datosDetalles" widgetVar="wdgDetalles">
+                                <p:dataTable value="#{pedidosBean.listaDetalle}" var="detalle" >
+                                    <p:column headerText="cantidad" >
+                                        <h:outputText value="#{detalle.cantidad}"/>
+                                    </p:column>
+                                     <p:column headerText="precio" >
+                                         <h:outputText value="#{detalle.precioUnitario}"/>
+                                    </p:column>
+                                
+                                </p:dataTable>
+                            </p:dialog>
+                            
                         </h:form>
                         <h:form>
                             <p:commandLink value="Ir A La Tienda" action="index.xhtml?faces-redirect=true"/>

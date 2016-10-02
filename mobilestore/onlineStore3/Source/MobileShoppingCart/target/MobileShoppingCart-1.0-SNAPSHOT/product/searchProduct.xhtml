@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <ui:composition template="/templates/secured/layout.xhtml">
+            <ui:define name="content">
+                <div class="col-md-3">
+                    <h3>#{msg.search_product_filters}</h3>
+                    <h:form>
+                        <p:panel header="#{msg.search_product_brand_filter}" style="margin-bottom: 10px">
+                            <p:selectManyCheckbox id="brandFilters" 
+                                                  value="#{searchProductView.selectedBrands}" 
+                                                  layout="pageDirection">
+                                <p:ajax listener="#{searchProductView.searchProducts}" update="searchResultForm" />
+                                <f:selectItems value="#{searchProductView.brandItems}" var="item" 
+                                               itemLabel="#{item}" itemValue="#{item}" />
+                            </p:selectManyCheckbox>
+                        </p:panel> 
+
+                        <p:panel header="#{msg.search_product_os_filter}">
+                            <p:selectManyCheckbox id="osFilters" 
+                                                  value="#{searchProductView.selectedOS}" 
+                                                  layout="pageDirection" >
+                                <p:ajax listener="#{searchProductView.searchProducts}" update="searchResultForm" />
+                                <f:selectItems value="#{searchProductView.OSItems}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                            </p:selectManyCheckbox>                            
+                        </p:panel>
+                    </h:form>
+                </div>
+                <div class="col-md-9">
+                    <h2>#{msg.search_product_title}</h2>
+                    <div class="row">
+                        <h:form id="searchResultForm">
+                            <p:carousel value="#{searchProductView.searchProductItems}" 
+                                        headerText="#{msg.search_product_title}" 
+                                        var="item" numVisible="3" 
+                                        responsive="false" itemStyle="height: 555px">
+                                <div class="row" style="height: 360px">
+                                    <p class="col-md-12 text-center">
+                                        <p:commandLink action="#{searchProductView.viewProduct(item.productID)}">
+                                            <p:graphicImage value="/resources/static/product/#{item.imageUrl}" width="200" />
+                                        </p:commandLink>
+                                    </p>
+                                </div>
+                                <div class="row"><p class="text-center"><strong><h:outputText value="#{item.brand}" /></strong></p></div>
+                                <div class="row"><p class="text-center"><h:outputText value="#{item.model}" /></p></div>
+                                <div class="row"><p class="text-center text-danger"><h:outputText value="S/. #{item.price}" /></p></div>
+                                <p:outputPanel class="row" rendered="#{!item.addedToOrder}">
+                                    <p class="text-center">
+                                        <p:commandLink value="#{msg.search_product_add_button}" 
+                                                       actionListener="#{searchProductView.addProductToOrder(item)}"
+                                                       update="searchResultForm,menuForm"
+                                                       class="btn btn-primary" style="color: white; margin-left: 5px;"/>
+                                    </p>
+                                </p:outputPanel>
+                                <p:outputPanel class="row" rendered="#{item.addedToOrder}">
+                                    <p class="text-center">
+                                        <h:outputText value="#{msg.search_product_added_qty} #{item.orderItem.quantity}" />
+                                        <p:commandLink value="+" 
+                                                       actionListener="#{searchProductView.increaseProductQty(item)}"
+                                                       update="searchResultForm,menuForm"
+                                                       class="btn btn-primary"
+                                                       style="color: white; margin-left: 5px; width: 40px"/>
+                                        <p:commandLink value="-" 
+                                                       actionListener="#{searchProductView.decreaseProductQty(item)}"
+                                                       update="searchResultForm,menuForm"
+                                                       class="btn btn-primary"
+                                                       style="color: white; margin-left: 5px; width: 40px"/>
+                                    </p>
+                                </p:outputPanel>
+                                <p:outputPanel class="row" rendered="#{item.addedToOrder}">
+                                    <p class="text-center">
+                                        <p:commandLink value="#{msg.search_product_remove_button}" 
+                                                       actionListener="#{searchProductView.removeProductFromOrder(item)}"
+                                                       update="searchResultForm,menuForm"
+                                                       class="btn btn-primary" style="color: white; margin-top: 10px"/>
+                                    </p>
+                                </p:outputPanel>
+                            </p:carousel>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

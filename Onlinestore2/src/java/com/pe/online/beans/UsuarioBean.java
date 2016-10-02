@@ -5,6 +5,7 @@
  */
 package com.pe.online.beans;
 
+import com.pe.online.dao.ClienteDAO;
 import com.pe.online.dao.UsuarioDAO;
 import com.pe.online.entity.UsuarioTO;
 import java.util.ArrayList;
@@ -80,19 +81,14 @@ public class UsuarioBean {
 
     public void seleccionar(UsuarioTO user) {
 
-        
+        System.out.println("llamando a seleccionar");
         UsuarioDAO usuarioDao = new UsuarioDAO();
         usuario = usuarioDao.seleccionar(user);
         accion = "modificar";
     }
 
     public void modificar() {
-//        int index = lista.lastIndexOf(usuario);
-//        usuario.setCodigo(index + 1);
-//        lista.add(index, usuario);
-//        lista.remove(index + 1);
-//        return lista;
-//   
+   
     UsuarioDAO usuarioDAO = new UsuarioDAO();
     usuarioDAO.modificar(this.usuario);
     mostrarTodos();
@@ -119,9 +115,12 @@ public class UsuarioBean {
     public String login() {
         String resultado = "";
         mostrarTodos();
-        UsuarioDAO usuarioDAo = new UsuarioDAO();
+       UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-        if (usuarioDAo.login(usuario)) {
+        if (usuarioDAO.login(usuario)) {
+            
+            
+            
             resultado = "cms-admin.xhtml?faces-redirect=true";
 
         } else {

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:body>
+        <ui:composition>
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>#{msg.main_title}</h1>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <p class="text-right">
+                            <strong><h:outputText value="#{securityController.userFullName}" /></strong>
+                        </p>      
+                    </div>
+                    <div class="row">
+                        <h:form class="text-right">
+                            <h:commandLink action="#{customerListView.editCustomer(securityController.customerID)}" 
+                                           value="#{msg.menu_profile}"
+                                           immediate="true"
+                                           style="margin-right: 10px"
+                                           rendered="#{!securityController.admin}"/>
+                            <h:commandLink action="#{securityController.logout()}" 
+                                           value="#{msg.menu_logout}"
+                                           immediate="true" />
+                        </h:form>
+                    </div>
+                    <div class="row">                       
+                        <h:form id="menuForm">  
+                            <p:menubar>
+                                <p:menuitem value="#{msg.menu_customer}" 
+                                            action="#{customerListView.listCustomers()}"
+                                            rendered="#{securityController.admin}"
+                                            immediate="true" />
+                                <p:menuitem value="#{msg.menu_product}" 
+                                            action="#{searchProductView.searchProducts()}" 
+                                            rendered="#{!securityController.admin}"
+                                            immediate="true"/>
+                                <p:menuitem value="#{msg.menu_order}" 
+                                            action="#{orderListView.listOrders()}" 
+                                            immediate="true"/>
+                                <p:menuitem value="#{msg.menu_checkout} (#{productController.order.items.size()} #{msg.menu_checkout_items})"  
+                                            action="#{checkoutView.showCheckout()}"
+                                            rendered="#{!securityController.admin and productController.order.items.size() > 0}" 
+                                            immediate="true"/>
+                            </p:menubar>
+                        </h:form>                
+                    </div>
+                </div>
+            </div>
+        </ui:composition>
+    </h:body>
+</html>

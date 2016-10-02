@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui ="http://java.sun.com/jsf/facelets"
+      xmlns:f ="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="css/stylelogin.css" rel="stylesheet" type="text/css" media="all" />
+    </head>
+    <h:body>
+
+
+        <div class="container">
+            <div id="login-form">
+                <h3>Login</h3>
+                <fieldset>
+                    <h:form>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="#{msgs.usuario}"/>
+                            <p:inputText value="#{clienteBean.cliente.nombre}" style="width: 150px;height: 10px" />
+                            <p:outputLabel value="#{msgs.contrasena}"/>
+                            <p:inputText value="#{clienteBean.cliente.correo}" style="width: 150px;height:  10px" />
+                            <p:outputLabel value=""/>
+                            <h:panelGroup><p:commandButton action="#{clienteBean.login()}" value="#{msgs.ingresar}"/>
+                                <p:outputLabel value=" "/>
+                                <p:commandButton action="index.xhtml?faces-redirect=true" value="#{msgs.cancelar}"/></h:panelGroup>
+
+                        </p:panelGrid>
+                        <footer class="clearfix" title="Forgot Password ?">
+                            <p>
+                                <a href="#">
+                                    <img src="images/forgot-password.png" alt="Forgot Password?"/>
+                                </a>
+                            </p>
+                        </footer>
+
+                    </h:form>
+                </fieldset>
+            </div> 
+        </div>
+    </h:body>
+</html>

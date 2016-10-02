@@ -8,58 +8,32 @@ import javax.persistence.Persistence;
 
 public class JPAUtil {
 
-    private static EntityManagerFactory emf;
-    private static ThreadLocal<EntityManager> managerEM;
-    private static ThreadLocal<EntityTransaction> managerET;
+    private static final String PERSISTENCE_UNIT = "OnlineStorePU";
+    private static ThreadLocal<EntityManager> threadLocal;
+    private static EntityManagerFactory factory;
 
-
-    public static void init(String nameBD) {
-        emf = Persistence.createEntityManagerFactory(nameBD);
-        System.out.println("Abriu conexão!");
-        managerEM = new ThreadLocal<EntityManager>();
-        managerET = new ThreadLocal<EntityTransaction>();
+    static {
+        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+        threadLocal = new ThreadLocal<EntityManager>();
     }
 
 
     public static EntityManager getEntityManager() {
-        if (managerEM.get() == null) {
-            managerEM.set(emf.createEntityManager());
+        if (threadLocal.get() == null) {
+            threadLocal.set(factory.createEntityManager());
         }
-        return managerEM.get();
-    }   
-
-
-    public static EntityTransaction getTransaction() {
-        if (managerET.get() == null) {
-            managerET.set(getEntityManager().getTransaction());
-        }
-
-        return managerET.get();
-    }
-    
-     public static void closeEntityManagerFactory() {
-        emf.close();
-    }
-     public static void closeEntityManager() {
-        EntityManager entityManager = managerEM.get();
-        if (entityManager != null) {
-            entityManager.close();
-            managerEM.set(null);
-        }
+        return threadLocal.get();
     }
 
-    public static void commit() {
-        if (!managerET.get().isActive()) {
-            managerET.get().begin();
+    /**
+     * Responsavel por fechar a EntityManager.
+     */
+    public static void closeEntityManager() {
+        EntityManager em = threadLocal.get();
+        if (em != null) {
+            threadLocal.remove();
+            em.close();
         }
-        managerET.get().commit();
-    }
-
-    public static void rollback() {
-        if (!managerET.get().isActive()) {
-          managerET.get().begin();
-        }
-        managerET.get().rollback();
     }
     
 }

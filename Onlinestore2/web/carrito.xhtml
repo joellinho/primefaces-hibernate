@@ -41,7 +41,7 @@ and open the template in the editor.
                                         <br></br>
                                         <p:commandButton action="#{shoppingBean.VaciarCar}" value="vacear carrito" update="datos"/>
                                         <p:commandButton action="index.xhtml?faces-redirect=true" value="Seguir comprando"/>
-                                        <p:commandButton action="prueba.xhtml" value="hacer compra"/>
+                                        <p:commandButton action="#{pedidosBean.agregarPedidos(shoppingBean.calcularTotal(),clienteBean.codigoCliente,shoppingBean.carrito)}" value="hacer compra"/>
 
                                     </h:form>
 

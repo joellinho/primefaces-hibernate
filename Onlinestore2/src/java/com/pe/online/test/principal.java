@@ -10,7 +10,7 @@ import com.pe.online.beans.UsuarioBean;
 import com.pe.online.dao.PedidosDAO;
 import com.pe.online.dao.ProductoDAO;
 import com.pe.online.dao.UsuarioDAO;
-import com.pe.online.entity.Pedidos;
+import com.pe.online.entity.PedidoTO;
 import com.pe.online.entity.ProductoTO;
 import com.pe.online.entity.UsuarioTO;
 import java.util.ArrayList;

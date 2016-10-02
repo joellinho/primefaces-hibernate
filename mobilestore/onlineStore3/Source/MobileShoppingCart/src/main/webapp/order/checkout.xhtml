@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/templates/secured/layout.xhtml">
+            <ui:define name="content">
+                <div class="col-md-3">                    
+                    <h3>#{msg.checkout_summary}</h3>
+                    <h:form id="summaryForm" class="form-horizontal">
+                        <div class="form-group">
+                            <h:outputLabel value="#{msg.checkout_subtotal}" class="col-md-5 control-label" />
+                            <h:outputText value="#{checkoutView.order.subTotal}" class="col-md-5 text-right form-control-static">
+                                <f:convertNumber pattern="0.00" />
+                            </h:outputText>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="#{msg.checkout_tax}" class="col-md-5 control-label" />
+                            <h:outputText value="#{checkoutView.order.taxAmount}" class="col-md-5 text-right form-control-static">
+                                <f:convertNumber pattern="0.00" />
+                            </h:outputText>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="#{msg.checkout_total}" class="col-md-5 control-label" />
+                            <h:outputText value="#{checkoutView.order.total}" class="col-md-5 text-right form-control-static">
+                                <f:convertNumber pattern="0.00" />
+                            </h:outputText>
+                        </div>
+                        <div class="form-group">                            
+                            <h:outputLabel value="#{msg.checkout_delivery}" class="col-md-5 control-label" />
+                            <h:outputText value="#{checkoutView.order.deliveryDate}" class="col-md-5 text-right form-control-static">
+                                <f:convertDateTime pattern="dd-MMM-yyyy" />
+                            </h:outputText>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <h:commandButton value="#{msg.checkout_button}" action="#{checkoutView.checkout()}" 
+                                                 class="btn btn-primary" rendered="#{checkoutView.order.items.size() > 0}"/>
+                            </div>                            
+                        </div>                            
+                    </h:form>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <h:form id="resultForm">
+                            <h2>#{msg.checkout_title} (#{checkoutView.order.items.size()} #{msg.menu_checkout_items})</h2>
+                            <p:dataList var="item" value="#{checkoutView.orderItems}" type="definition">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p:commandLink action="#{searchProductView.viewProduct(item.productID)}">
+                                            <p:graphicImage value="/resources/static/product/#{item.product.imageUrl}" width="200" />
+                                        </p:commandLink>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="row" style="margin-top: 50px"><strong><h:outputText value="#{item.product.brand}" /></strong></div>
+                                        <div class="row"><h:outputText value="#{item.product.model}" class="form-control-static"/></div>
+                                        <div class="row"><h:outputText value="S/. #{item.unitPrice}" class="text-danger"/></div>
+                                        <div class="row">
+                                            <h:outputLabel value="#{msg.search_product_added_qty} #{item.quantity}" />
+                                            <p:commandLink value="+" 
+                                                           actionListener="#{checkoutView.increaseProductQty(item)}"
+                                                           update="resultForm,menuForm,summaryForm"
+                                                           class="btn btn-primary text-center" style="color: white; margin-left: 5px; width: 40px"/>
+                                            <p:commandLink value="-" 
+                                                           actionListener="#{checkoutView.decreaseProductQty(item)}"
+                                                           update="resultForm,menuForm,summaryForm"
+                                                           class="btn btn-primary text-center" style="color: white; margin-left: 5px; width: 40px"/>
+                                        </div>
+                                        <div class="row">
+                                            <p:commandLink value="#{msg.search_product_remove_button}" 
+                                                           actionListener="#{checkoutView.removeProductFromOrder(item)}"
+                                                           update="resultForm,menuForm,summaryForm"
+                                                           class="btn btn-primary" style="color: white; margin-top: 10px"/>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </p:dataList>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

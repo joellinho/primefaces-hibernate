@@ -5,14 +5,20 @@
  */
 package model;
 
+
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -24,6 +30,14 @@ import javax.validation.constraints.NotNull;
 @Table(name = "producto")
 @NamedQuery(name = "producto.findAll" ,query = "select p from Producto p")
 public class Producto implements Serializable {
+//
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Basic(optional = false)
+//    @Column(name = "codigo", nullable = false)
+//    private Integer codigo;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+//    private Collection<DetallePedido> detallePedidoCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,7 +75,8 @@ public class Producto implements Serializable {
     @Column(name = "banner_grande")
     private String bannerGrande;
    
-
+    @OneToMany(mappedBy = "producto",cascade = CascadeType.ALL)
+    private List<DetallePedido> listaDetalles;
     public Producto() {
     }
 
@@ -158,6 +173,14 @@ public class Producto implements Serializable {
     public void setBannerGrande(String bannerGrande) {
         this.bannerGrande = bannerGrande;
     }
+
+    public List<DetallePedido> getListaDetalles() {
+        return listaDetalles;
+    }
+
+    public void setListaDetalles(List<DetallePedido> listaDetalles) {
+        this.listaDetalles = listaDetalles;
+    }
     
     
     @Override
@@ -193,6 +216,51 @@ public class Producto implements Serializable {
     public String toString() {
         return "Producto{" + "codigo=" + codigo + ", codigoCategoria=" + codigoCategoria + ", codigoSubcategoria=" + codigoSubcategoria + ", nombreProducto=" + nombreProducto + ", imagen=" + imagen + ", descripcion=" + descripcion + ", precio=" + precio + ", imagenChica=" + imagenChica + ", imagenGrande=" + imagenGrande + ", bannerChico=" + bannerChico + ", bannerGrande=" + bannerGrande + '}';
     }
-    
+
+//    public Producto(Integer codigo) {
+//        this.codigo = codigo;
+//    }
+//
+//    public Integer getCodigo() {
+//        return codigo;
+//    }
+//
+//    public void setCodigo(Integer codigo) {
+//        this.codigo = codigo;
+//    }
+//
+//    public Collection<DetallePedido> getDetallePedidoCollection() {
+//        return detallePedidoCollection;
+//    }
+//
+//    public void setDetallePedidoCollection(Collection<DetallePedido> detallePedidoCollection) {
+//        this.detallePedidoCollection = detallePedidoCollection;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int hash = 0;
+//        hash += (codigo != null ? codigo.hashCode() : 0);
+//        return hash;
+//    }
+
+//    @Override
+//    public boolean equals(Object object) {
+//        // TODO: Warning - this method won't work in the case the id fields are not set
+//        if (!(object instanceof Producto)) {
+//            return false;
+//        }
+//        Producto other = (Producto) object;
+//        if ((this.codigo == null && other.codigo != null) || (this.codigo != null && !this.codigo.equals(other.codigo))) {
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "model.Producto[ codigo=" + codigo + " ]";
+//    }
+//    
 
 }

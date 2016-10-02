@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui ="http://java.sun.com/jsf/facelets"
+      xmlns:f ="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./WEB-INF/templates/plantillacms.xhtml">
+            <ui:define name="body">
+                <div id="page-wrapper" >
+                    <div class="graphs">
+                        <div class="graph_box">
+                            <h:form id="frm">
+                                
+                                <p:commandButton action="#{clienteBean.mostrarTodos()}" update="datos" value="mostrar todos"/>
+                                <p:commandButton value="agregar" action="#{clienteBean.setAccion('adicionar')}" oncomplete="PF('dlgClientes').show()" update=":s" />
+                                <p:dataTable value="#{clienteBean.clientes}" id="datos" var="cliente">
+                                    <p:column headerText="codigo" ><h:outputText value="#{cliente.codigo}"/></p:column>
+                                    <p:column headerText="nombre" ><h:outputText value="#{cliente.nombre}"/></p:column>
+                                    <p:column headerText="correo" ><h:outputText value="#{cliente.correo}"/></p:column>
+                                    <p:column headerText="eda" ><h:outputText value="#{cliente.edad}"/></p:column>
+                                    <p:column headerText="modificar">
+                                        <p:commandButton value="modificar"  actionListener="#{clienteBean.seleccionar(cliente)}" oncomplete="PF('dlgClientes').show()" update=":s"/>
+                                    </p:column>
+                                    <p:column headerText="Eliminar">
+                                        <p:commandButton value="Eliminar" actionListener="#{clienteBean.eliminar(cliente)}" update="datos"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+
+                            <p:dialog id="s" widgetVar="dlgClientes">
+                                <h:form>
+                                    <p:panelGrid columns="2">
+                                        <h:outputLabel value="codigo" /> 
+                                        <h:inputText value="#{clienteBean.cliente.codigo}"/>
+
+                                        <h:outputLabel value="nombre" /> 
+                                        <h:inputText value="#{clienteBean.cliente.nombre}"/>
+
+                                        <h:outputLabel value="correo" /> 
+                                        <h:inputText value="#{clienteBean.cliente.correo}"/>
+
+                                        <h:outputLabel value="edad" /> 
+                                        <h:inputText value="#{clienteBean.cliente.edad}"/>
+
+
+                                        <p:commandButton value="#{clienteBean.accion}" actionListener="#{clienteBean.ejecutar()}" oncomplete="PF('dlgClientes').hide()" update=":frm:datos"/>
+
+                                    </p:panelGrid>
+                                </h:form>
+                            </p:dialog>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

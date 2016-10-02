@@ -26,12 +26,15 @@ import model.Producto;
 public class ProductoDAO {
 
     Map<Integer, ProductoTO> fuente = new HashMap<>();
+    CriteriaBuilder cb;
+    CriteriaQuery<ProductoTO> cq;
+    Root<Producto> productoRoot;
 //    EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
-  
-    EntityManager ema;
+    EntityManager ema = JPAUtil.getEntityManager();
+
     public ProductoDAO() {
         fuente = poblar();
-        
+
     }
 
     public Map<Integer, ProductoTO> poblar() {
@@ -250,18 +253,15 @@ public class ProductoDAO {
         return fuente2;
     }
 
-  
-
     public List<ProductoTO> getProductosIndex() {
 
         List<ProductoTO> listaproductos = new ArrayList<>();
         String query = "select new com.pe.online.entity.ProductoTO(p.codigo,p.codigoCategoria,p.codigoSubcategoria,p.nombreProducto,p.imagen,p.descripcion,p.precio,p.imagenChica,p.imagenGrande,p.bannerChico,p.bannerGrande) from Producto  p where p.bannerChico='no' and p.bannerGrande='no' ";
-       EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
-         ema = emf.createEntityManager();
+
         TypedQuery<ProductoTO> typedquery = ema.createQuery(query, ProductoTO.class);
         typedquery.setMaxResults(3);
         listaproductos = typedquery.getResultList();
-           ema.close();
+
         return listaproductos;
     }
 
@@ -275,39 +275,36 @@ public class ProductoDAO {
             }
 
         }
-        
+
         return listaproductos;
     }
 
     public List<ProductoTO> getBanner() {
 
         List<ProductoTO> listaBanner = new ArrayList<>();
-        String query = "select new com.pe.online.entity.ProductoTO(p.codigo,p.codigoCategoria,p.codigoSubcategoria,p.nombreProducto,p.imagen,p.descripcion,p.precio,p.imagenChica,p.imagenGrande,p.bannerChico,p.bannerGrande) from Producto p where p.bannerGrande='si'";
-     EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
-        EntityManager ema = emf.createEntityManager();
-//        EntityManager em = JPAUtil.getEntityManager();
-        TypedQuery<ProductoTO> typedQuery = ema.createQuery(query, ProductoTO.class);
-        listaBanner = typedQuery.getResultList();
-     
+//        String query = "select new com.pe.online.entity.ProductoTO(p.codigo,p.codigoCategoria,p.codigoSubcategoria,p.nombreProducto,p.imagen,p.descripcion,p.precio,p.imagenChica,p.imagenGrande,p.bannerChico,p.bannerGrande) from Producto p where p.bannerGrande='si'";
+//
+//        TypedQuery<ProductoTO> typedQuery = ema.createQuery(query, ProductoTO.class);
+CriteriaQuery<ProductoTO> prodcriteria = this.getcriteriaProducto();
+        prodcriteria.where(cb.equal(productoRoot.get("bannerGrande"), "si"));
+        TypedQuery<ProductoTO> typedQuery = ema.createQuery(prodcriteria);        
+listaBanner = typedQuery.getResultList();
+
         return listaBanner;
 
     }
 
     public List<ProductoTO> getThreeOfertas() {
         List<ProductoTO> lista = new ArrayList<>();
-        String query = "select new com.pe.online.entity.ProductoTO(p.codigo,p.codigoCategoria,p.codigoSubcategoria,p.nombreProducto,p.imagen,p.descripcion,p.precio,p.imagenChica,p.imagenGrande,p.bannerChico,p.bannerGrande) from Producto p  where p.bannerChico='si'";
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
-         ema = emf.createEntityManager();
-        TypedQuery<ProductoTO> typedQuery = ema.createQuery(query, ProductoTO.class);
+//        String query = "select new com.pe.online.entity.ProductoTO(p.codigo,p.codigoCategoria,p.codigoSubcategoria,p.nombreProducto,p.imagen,p.descripcion,p.precio,p.imagenChica,p.imagenGrande,p.bannerChico,p.bannerGrande) from Producto p  where p.bannerChico='si'";
+        CriteriaQuery<ProductoTO> prodcriteria = this.getcriteriaProducto();
+        prodcriteria.where(cb.equal(productoRoot.get("bannerChico"), "si"));
+        TypedQuery<ProductoTO> typedQuery = ema.createQuery(prodcriteria);
         lista = typedQuery.getResultList();
-        ema.close();
-     
-       
         return lista;
     }
 
     public List<ProductoTO> buscarPorNombre(ProductoTO producto) {
-
         List<ProductoTO> listafiltrada = new ArrayList<>();
         for (int i = 1; i <= fuente.size(); i++) {
             if (fuente.get(i).getNombreProducto().contains(producto.getNombreProducto())) {
@@ -323,25 +320,18 @@ public class ProductoDAO {
 
         ProductoTO producto = new ProductoTO();
         String query = "select new com.pe.online.entity.ProductoTO(p.codigo,p.codigoCategoria,p.codigoSubcategoria,p.nombreProducto,p.imagen,p.descripcion,p.precio,p.imagenChica,p.imagenGrande,p.bannerChico,p.bannerGrande) from Producto p where id=:codigo";
-             JPAUtil.init("OnlineStorePU");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
-         ema = emf.createEntityManager();
         TypedQuery<ProductoTO> typedQuery = ema.createQuery(query, ProductoTO.class);
         typedQuery.setParameter("codigo", codigo);
         producto = typedQuery.getSingleResult();
-        ema.close();
         return producto;
 
     }
 
     public List<ProductoTO> mostrarTodos() {
-
         List<ProductoTO> lista = new ArrayList<>();
-       
         CriteriaQuery<ProductoTO> criteriaprod = getcriteriaProducto();
         TypedQuery<ProductoTO> typedQuery = ema.createQuery(criteriaprod);
         lista = typedQuery.getResultList();
-        ema.close();
         return lista;
     }
 
@@ -351,14 +341,22 @@ public class ProductoDAO {
     }
 
     public CriteriaQuery<ProductoTO> getcriteriaProducto() {
-     EntityManagerFactory emf = Persistence.createEntityManagerFactory("OnlineStorePU");
-        ema = emf.createEntityManager();
-        CriteriaBuilder cb = ema.getCriteriaBuilder();
-        CriteriaQuery<ProductoTO> cq = cb.createQuery(ProductoTO.class);
-        Root<Producto> productoRoot = cq.from(Producto.class);
-        cq.select(cb.construct(ProductoTO.class, productoRoot.get("codigo"), productoRoot.get("codigoCategoria"), productoRoot.get("codigoSubcategoria"), productoRoot.get("nombreProducto"), productoRoot.get("imagen"), productoRoot.get("descripcion"), productoRoot.get("precio"), productoRoot.get("imagenChica"), productoRoot.get("imagenGrande"), productoRoot.get("bannerChico"), productoRoot.get("bannerGrande")));
-     
-        
+        cb = ema.getCriteriaBuilder();
+        cq = cb.createQuery(ProductoTO.class);
+        productoRoot = cq.from(Producto.class);
+        cq.select(cb.construct(ProductoTO.class, 
+                productoRoot.get("codigo"),
+                productoRoot.get("codigoCategoria"), 
+                productoRoot.get("codigoSubcategoria"),
+                productoRoot.get("nombreProducto"),
+                productoRoot.get("imagen"),
+                productoRoot.get("descripcion"),
+                productoRoot.get("precio"),
+                productoRoot.get("imagenChica"),
+                productoRoot.get("imagenGrande"),
+                productoRoot.get("bannerChico"), 
+                productoRoot.get("bannerGrande")));
+
         return cq;
 
     }

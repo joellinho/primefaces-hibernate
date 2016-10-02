@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/templates/secured/layout.xhtml">
+            <ui:define name="content">
+                <div class="col-md-3">
+                    <h3>#{msg.order_filters}</h3>
+                    <h:form>
+                        <p:panel header="#{msg.orders_status_filter}">
+                            <p:selectManyCheckbox id="statusFilters" 
+                                                  value="#{orderListView.selectedStatus}" 
+                                                  layout="pageDirection">
+                                <p:ajax listener="#{orderListView.filterOrders}" 
+                                        update="resultForm" />
+                                <f:selectItem itemLabel="#{msg.order_pending}" itemValue="1" />
+                                <f:selectItem itemLabel="#{msg.order_processed}" itemValue="2" />
+                                <f:selectItem itemLabel="#{msg.order_delivered}" itemValue="3" />
+                                <f:selectItem itemLabel="#{msg.order_cancelled}" itemValue="-1" />
+                            </p:selectManyCheckbox>
+                        </p:panel> 
+                    </h:form>
+                </div>
+                <div class="col-md-9">
+                    <h2>#{msg.order_title}</h2>
+                    <div class="row">
+                        <h:form id="resultForm">
+                            <p:dataTable var="order" value="#{orderListView.orderList}">
+                                <p:column headerText="#{msg.order_table_id}" width="40">
+                                    <h:outputText value="#{order.orderID}" />
+                                </p:column>
+
+                                <p:column headerText="#{msg.order_table_customer}" width="100">
+                                    <h:outputText value="#{order.customerFullName}" />
+                                </p:column>
+
+                                <p:column headerText="#{msg.order_table_delivery}" width="100">
+                                    <h:outputText value="#{order.deliveryDate}">
+                                        <f:convertDateTime pattern="dd-MMM-yyyy" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="#{msg.order_table_subtotal}" width="60" class="text-right">
+                                    <h:outputText value="#{order.subTotal}">
+                                        <f:convertNumber pattern="0.00" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="#{msg.order_table_tax}" width="60" class="text-right">
+                                    <h:outputText value="#{order.taxAmount}">
+                                        <f:convertNumber pattern="0.00" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="#{msg.order_table_total}" width="60" class="text-right">
+                                    <h:outputText value="#{order.total}">
+                                        <f:convertNumber pattern="0.00" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="#{msg.order_table_status}" width="80">
+                                    <h:outputText value="#{msg.order_pending}" rendered="#{order.status == 1}" />
+                                    <h:outputText value="#{msg.order_processed}" rendered="#{order.status == 2}" />
+                                    <h:outputText value="#{msg.order_delivered}" rendered="#{order.status == 3}" />
+                                    <h:outputText value="#{msg.order_cancelled}" rendered="#{order.status == -1}" />
+                                </p:column>
+
+                                <p:column headerText="#{msg.order_table_status_date}" width="100">
+                                    <h:outputText value="#{order.createdOn}" rendered="#{order.status == 1}">
+                                        <f:convertDateTime pattern="dd-MMM-yyyy" />
+                                    </h:outputText>
+                                    <h:outputText value="#{order.cancelledOn}" rendered="#{order.status == -1}">
+                                        <f:convertDateTime pattern="dd-MMM-yyyy" />
+                                    </h:outputText>
+                                    <h:outputText value="#{order.processedOn}" rendered="#{order.status == 2}">
+                                        <f:convertDateTime pattern="dd-MMM-yyyy" />
+                                    </h:outputText>
+                                    <h:outputText value="#{order.deliveredOn}" rendered="#{order.status == 3}">
+                                        <f:convertDateTime pattern="dd-MMM-yyyy" />
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column headerText="#{msg.order_table_actions}" width="100">
+                                    <div>
+                                        <p:commandLink value="#{msg.order_table_action_view}" 
+                                                       action="#{orderListView.viewOrder(order.orderID)}" 
+                                                       class="btn btn-link"/>
+                                    </div>
+                                    <div>
+                                        <p:commandLink value="#{msg.order_table_action_process}" 
+                                                       actionListener="#{orderListView.processOrder(order)}" 
+                                                       rendered="#{securityController.admin and order.status == 1}"
+                                                       update="resultForm"
+                                                       class="btn btn-link"/>
+                                    </div>
+                                    <div>
+                                        <p:commandLink value="#{msg.order_table_action_deliver}" 
+                                                       actionListener="#{orderListView.deliverOrder(order)}" 
+                                                       rendered="#{securityController.admin and order.status == 2}"
+                                                       update="resultForm"
+                                                       class="btn btn-link"/>
+                                    </div>
+                                    <div>
+                                        <p:commandLink value="#{msg.order_table_action_cancel}" 
+                                                       actionListener="#{orderListView.cancelOrder(order)}"
+                                                       rendered="#{order.status == 1}"
+                                                       update="resultForm"
+                                                       class="btn btn-link"/>
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
